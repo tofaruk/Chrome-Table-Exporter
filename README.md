@@ -1,0 +1,1 @@
+# Table Picker & Copier\nLoad this unpacked extension in Chrome.

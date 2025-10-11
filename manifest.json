@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Table Picker & Copier",
+  "version": "1.0.0",
+  "description": "Select rows and columns from any HTML table and copy to clipboard as CSV/TSV/semicolon/pipe/custom.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["clipboardWrite", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
