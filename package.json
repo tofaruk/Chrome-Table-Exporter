@@ -1,0 +1,27 @@
+{
+  "name": "table-picker-copier",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/content.ts --bundle --format=iife --target=es2021 --outfile=dist/content.js",
+    "build:watch": "esbuild src/content.ts --bundle --format=iife --target=es2021 --outfile=dist/content.js --watch",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "vitest run --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^22.7.4",
+    "esbuild": "^0.23.1",
+    "eslint": "^9.11.1",
+    "@eslint/js": "^9.11.1",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.2",
+    "vitest": "^2.0.5",
+    "@vitest/coverage-v8": "^2.0.5",
+    "jsdom": "^25.0.0"
+  }
+}
