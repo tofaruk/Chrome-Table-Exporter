@@ -1,0 +1,49 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# Build output
+dist/
+build/
+tmp/
+temp/
+out/
+coverage/
+*.tsbuildinfo
+
+# Chrome extension build / packed files
+*.crx
+*.pem
+*.zip
+
+# IDE and system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+logs/
+*.log
+
+# Test outputs
+test-results/
+.jest/
+.jest-cache/
+.jest-test-sequencer/
+
+# Env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+

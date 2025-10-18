@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Table Picker & Copier",
+  "name": "Table Exporter to CSV/TSV",
   "version": "2.0.0",
   "description": "Select rows/columns from HTML tables and copy or download as CSV/TSV.",
   "icons": {
@@ -9,25 +9,14 @@
     "128": "icons/icon128.png"
   },
   "permissions": [
-    "clipboardWrite",
-    "storage"
+    "scripting",
+    "activeTab",
+    "clipboardWrite"
   ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "dist/content.js"
-      ],
-      "css": [
-        "styles.css"
-      ],
-      "run_at": "document_idle",
-       "all_frames": true   
-    }
-  ]
+  "action": {
+    "default_title": "Enable Table Exporter on this tab"
+  },
+  "background": {
+    "service_worker": "dist/background.js"
+  }
 }

@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "esbuild src/content.ts --bundle --format=iife --target=es2021 --outfile=dist/content.js",
-    "build:watch": "esbuild src/content.ts --bundle --format=iife --target=es2021 --outfile=dist/content.js --watch",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "test": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+  "build:content": "esbuild src/content.ts --bundle --format=iife --target=es2021 --outfile=dist/content.js",
+    "build:bg": "esbuild src/background.ts --bundle --format=iife --target=es2021 --outfile=dist/background.js",
+    "build": "npm run build:content && npm run build:bg",
+    "build:watch": "npm-run-all -p watch:content watch:bg",
+    "watch:content": "esbuild src/content.ts --bundle --format=iife --target=es2021 --outfile=dist/content.js --watch",
+    "watch:bg": "esbuild src/background.ts --bundle --format=iife --target=es2021 --outfile=dist/background.js --watch",
+    "test": "vitest run --coverage"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.7",
@@ -22,6 +23,7 @@
     "typescript": "^5.6.2",
     "vitest": "^2.0.5",
     "@vitest/coverage-v8": "^2.0.5",
-    "jsdom": "^25.0.0"
+    "jsdom": "^25.0.0",
+    "@types/chrome": "^0.0.268"
   }
 }
