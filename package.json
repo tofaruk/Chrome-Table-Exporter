@@ -4,26 +4,29 @@
   "private": true,
   "type": "module",
   "scripts": {
-  "build:content": "esbuild src/content.ts --bundle --format=iife --target=es2021 --outfile=dist/content.js",
+    "build:content": "esbuild src/content.ts --bundle --format=iife --target=es2021 --outfile=dist/content.js",
     "build:bg": "esbuild src/background.ts --bundle --format=iife --target=es2021 --outfile=dist/background.js",
     "build": "npm run build:content && npm run build:bg",
     "build:watch": "npm-run-all -p watch:content watch:bg",
     "watch:content": "esbuild src/content.ts --bundle --format=iife --target=es2021 --outfile=dist/content.js --watch",
     "watch:bg": "esbuild src/background.ts --bundle --format=iife --target=es2021 --outfile=dist/background.js --watch",
+    "webstore:zip": "npm run build && node scripts/pack-webstore.mjs",
     "test": "vitest run --coverage"
   },
   "devDependencies": {
+    "@eslint/js": "^9.11.1",
+    "@types/chrome": "^0.0.268",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.7.4",
+    "@vitest/coverage-v8": "^2.0.5",
+    "archiver": "^7.0.1",
     "esbuild": "^0.23.1",
     "eslint": "^9.11.1",
-    "@eslint/js": "^9.11.1",
+    "fast-glob": "^3.3.3",
     "globals": "^15.9.0",
+    "jsdom": "^25.0.0",
     "prettier": "^3.3.3",
     "typescript": "^5.6.2",
-    "vitest": "^2.0.5",
-    "@vitest/coverage-v8": "^2.0.5",
-    "jsdom": "^25.0.0",
-    "@types/chrome": "^0.0.268"
+    "vitest": "^2.0.5"
   }
 }
