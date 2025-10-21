@@ -14,6 +14,8 @@ It overlays an intuitive toolbar above detected HTML tables, allowing you to pic
 
 Everything runs locally in your browser — **no data collection, no external servers, and no tracking**.
 
+
+![Full page screenshot](assets/table_exporter_demo.gif)
 ---
 
 ## ✨ Features
