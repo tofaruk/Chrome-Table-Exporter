@@ -1,4 +1,4 @@
-# ![icon](./icons/icon16.png) Table Exporter to CSV/TSV
+# ![icon](./icons/icon48.png) Table Exporter to CSV/TSV
 
 **A lightweight Chrome extension to easily select and export HTML table data as CSV or TSV files.**  
 Transform any webpage table into clean, structured data — directly in your browser, with zero setup or tracking.
