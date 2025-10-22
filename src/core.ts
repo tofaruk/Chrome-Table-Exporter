@@ -9,6 +9,8 @@ export interface TableState {
   selectedCols: Set<number>;
   lastRowClickIndex: number | null;
   refreshRowCheckboxes: () => void;
+  selectAllRows: () => void;
+  selectAllCols: () => void;
 }
 
 export interface GatherOptions {
@@ -19,8 +21,8 @@ export function detectSimpleTable(table: HTMLTableElement): boolean {
   const rows = Array.from(table.rows);
   for (const r of rows) {
     for (const cell of Array.from(r.cells)) {
-      if (cell.colSpan > 1 || cell.rowSpan > 1){
-      //   console.debug('[TPE] Skipped: complex spans', table);
+      if (cell.colSpan > 1 || cell.rowSpan > 1) {
+        //   console.debug('[TPE] Skipped: complex spans', table);
         return false;
       }
     }
@@ -46,8 +48,9 @@ export function buildToolbar(): HTMLDivElement {
       <label class="${EXT_CLASS}-checkbox"><input type="checkbox" class="${EXT_CLASS}-include-headers" checked> Include header row</label>
       <label class="${EXT_CLASS}-checkbox"><input type="checkbox" class="${EXT_CLASS}-always-quote"> Always quote cells</label>
       <button class="${EXT_CLASS}-copy">Copy</button>
+      <button class="${EXT_CLASS}-select-all">Select all</button>
       <button class="${EXT_CLASS}-clear">Clear selection</button>
-      <button class="${EXT_CLASS}-download">Download (CSV)</button>
+      <button class="${EXT_CLASS}-download">Download</button>
     </div>
     <div class="${EXT_CLASS}-hint">Tip: Use the header checkboxes to pick columns, and the left edge to pick rows. Shift-click a row checkbox to select a range.</div>
   `;
@@ -146,9 +149,26 @@ export function injectSelectors(table: HTMLTableElement, state: TableState): voi
     });
 
     wrapper.append(cb, titleSpan);
-    th.textContent = "";
-    th.appendChild(wrapper);
+    if (th) {
+      th.textContent = "";
+      th.appendChild(wrapper);
+    }
   }
+
+  // NEW: expose select-all helpers
+  state.selectAllRows = () => {
+    const total = table.tBodies[0].rows.length;
+    state.selectedRows.clear();
+    for (let i = 0; i < total; i++) state.selectedRows.add(i);
+    allRowsCb.checked = true;
+    state.refreshRowCheckboxes();
+  };
+
+  state.selectAllCols = () => {
+    const allColsCount = table.tHead!.rows[0].cells.length - 1; // minus the row-select column
+    state.selectedCols = new Set(Array.from({ length: allColsCount }, (_, i) => i));
+    qsa<HTMLInputElement>(table, `.${EXT_CLASS}-col-cb`).forEach((cb) => (cb.checked = true));
+  };
 }
 
 export function gatherData(table: HTMLTableElement, state: TableState, options: { includeHeader: boolean }): string[][] {
@@ -233,7 +253,7 @@ export function attach(table: HTMLTableElement): void {
     selectedRows: new Set(),
     selectedCols: new Set(),
     lastRowClickIndex: null,
-    refreshRowCheckboxes: () => {},
+    refreshRowCheckboxes: () => { },
   };
 
   injectSelectors(table, state);
@@ -243,6 +263,7 @@ export function attach(table: HTMLTableElement): void {
 
   const copyBtn = qs<HTMLButtonElement>(toolbar, `.${EXT_CLASS}-copy`)!;
   const clearBtn = qs<HTMLButtonElement>(toolbar, `.${EXT_CLASS}-clear`)!;
+  const selectAllBtn = qs<HTMLButtonElement>(toolbar, `.${EXT_CLASS}-select-all`);
   const downloadBtn = qs<HTMLButtonElement>(toolbar, `.${EXT_CLASS}-download`)!;
 
   const includeHeadersCb = qs<HTMLInputElement>(toolbar, `.${EXT_CLASS}-include-headers`)!;
@@ -270,6 +291,10 @@ export function attach(table: HTMLTableElement): void {
     qsa<HTMLInputElement>(table, `.${EXT_CLASS}-col-cb`).forEach(cb => (cb.checked = false));
     state.refreshRowCheckboxes();
   });
+    selectAllBtn.addEventListener("click", () => {
+    state.selectAllRows();
+    state.selectAllCols();
+  });
 }
 
 
@@ -288,7 +313,7 @@ function scanShadowRoots(root: ParentNode = document) {
 export function init(root: ParentNode = document): void {
   const tryAttach = throttle(() => {
     qsa<HTMLTableElement>(root, "table").forEach(attach);
-      if (root === document) scanShadowRoots(root); // only scan shadow roots if we're at document level
+    if (root === document) scanShadowRoots(root); // only scan shadow roots if we're at document level
   }, 400);
 
   tryAttach();
