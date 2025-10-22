@@ -254,6 +254,8 @@ export function attach(table: HTMLTableElement): void {
     selectedCols: new Set(),
     lastRowClickIndex: null,
     refreshRowCheckboxes: () => { },
+    selectAllRows: () => {}, 
+    selectAllCols: () => {},  
   };
 
   injectSelectors(table, state);
@@ -263,7 +265,7 @@ export function attach(table: HTMLTableElement): void {
 
   const copyBtn = qs<HTMLButtonElement>(toolbar, `.${EXT_CLASS}-copy`)!;
   const clearBtn = qs<HTMLButtonElement>(toolbar, `.${EXT_CLASS}-clear`)!;
-  const selectAllBtn = qs<HTMLButtonElement>(toolbar, `.${EXT_CLASS}-select-all`);
+  const selectAllBtn = qs<HTMLButtonElement>(toolbar, `.${EXT_CLASS}-select-all`)!;
   const downloadBtn = qs<HTMLButtonElement>(toolbar, `.${EXT_CLASS}-download`)!;
 
   const includeHeadersCb = qs<HTMLInputElement>(toolbar, `.${EXT_CLASS}-include-headers`)!;
