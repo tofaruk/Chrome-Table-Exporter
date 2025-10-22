@@ -3,7 +3,7 @@
 **A lightweight Chrome extension to easily select and export HTML table data as CSV or TSV files.**  
 Transform any webpage table into clean, structured data — directly in your browser, with zero setup or tracking.
 
-Find the extension in Chrome Web Store :  [Table Exporter to CSV/TSV](https://chromewebstore.google.com/detail/jkcfpfpibimfnijapboknmknlkalldcd)
+Try the extension in Chrome Web Store :  [Table Exporter to CSV/TSV](https://chromewebstore.google.com/detail/jkcfpfpibimfnijapboknmknlkalldcd)
 
 ---
 
